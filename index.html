@@ -126,6 +126,12 @@
             align-items: center;
         }
 
+        .title-right-group {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -207,7 +213,7 @@
         </ul>
     </div>
 
-    <!-- 2. INFOCARD ATUALIZAÇÃO DO RBT12 (LOGOS APÓS DESPESAS ADMINISTRATIVAS) -->
+    <!-- 2. INFOCARD ATUALIZAÇÃO DO RBT12 -->
     <div class="info-card">
         <h3>📈 Atualização do RBT12 em Janeiro/2027 (R$ 586.391,80)</h3>
         <ul>
@@ -360,7 +366,10 @@
     <div class="section-box" id="box-puro">
         <div class="section-title">
             <span>2. Simples Nacional Puro <span class="badge-anexo">ANEXO I - Resolução CGSN nº 140/2018</span></span>
-            <span class="badge-winner" id="badge-puro">Mais Econômico</span>
+            <div class="title-right-group">
+                <span class="badge-winner" id="badge-puro">MAIS ECONÔMICO</span>
+                <span id="tot-puro-anual" style="font-size:1.1rem; font-weight:bold;">R$ 0,00</span>
+            </div>
         </div>
         <table>
             <thead>
@@ -381,7 +390,10 @@
     <div class="section-box" id="box-hibrido">
         <div class="section-title">
             <span>3. Simples Nacional Híbrido <span class="badge-anexo">ANEXO I Reduzido + CBS/IBS Não Cumulativo com Crédito de Despesas</span></span>
-            <span id="tot-hibrido-anual" style="font-size:1.1rem; font-weight:bold;">R$ 0,00</span>
+            <div class="title-right-group">
+                <span class="badge-winner" id="badge-hibrido" style="display:none;">MAIS ECONÔMICO</span>
+                <span id="tot-hibrido-anual" style="font-size:1.1rem; font-weight:bold;">R$ 0,00</span>
+            </div>
         </div>
         <table>
             <thead>
@@ -402,7 +414,10 @@
     <div class="section-box" id="box-lp">
         <div class="section-title">
             <span>4. Lucro Presumido (Regime Geral com Crédito de Compras e Despesas Admin)</span>
-            <span id="tot-lp-anual" style="font-size:1.1rem; font-weight:bold;">R$ 0,00</span>
+            <div class="title-right-group">
+                <span class="badge-winner" id="badge-lp" style="display:none;">MAIS ECONÔMICO</span>
+                <span id="tot-lp-anual" style="font-size:1.1rem; font-weight:bold;">R$ 0,00</span>
+            </div>
         </div>
         <table>
             <thead>
@@ -616,6 +631,7 @@
         htmlPuro += buildRow("TOTAL TRIBUTOS + FGTS (SIMPLES PURO)", dasPuroTot, true);
         htmlPuro += buildRow("(=) RESULTADO LÍQUIDO FINAL (LUCRO OPERACIONAL)", lucroPuro, true, false, true);
         document.getElementById('body-puro').innerHTML = htmlPuro;
+        document.getElementById('tot-puro-anual').innerText = fmt(dasPuroTot.reduce((a,b)=>a+b,0));
 
         // Render Simples Híbrido
         let htmlHibrido = "";
@@ -659,14 +675,18 @@
         document.getElementById('box-hibrido').classList.remove('winner');
         document.getElementById('box-lp').classList.remove('winner');
         document.getElementById('badge-puro').style.display = 'none';
+        document.getElementById('badge-hibrido').style.display = 'none';
+        document.getElementById('badge-lp').style.display = 'none';
 
         if (sumLucroPuro >= sumLucroHib && sumLucroPuro >= sumLucroLp) {
             document.getElementById('box-puro').classList.add('winner');
             document.getElementById('badge-puro').style.display = 'inline-block';
         } else if (sumLucroHib >= sumLucroPuro && sumLucroHib >= sumLucroLp) {
             document.getElementById('box-hibrido').classList.add('winner');
+            document.getElementById('badge-hibrido').style.display = 'inline-block';
         } else {
             document.getElementById('box-lp').classList.add('winner');
+            document.getElementById('badge-lp').style.display = 'inline-block';
         }
     }
 
