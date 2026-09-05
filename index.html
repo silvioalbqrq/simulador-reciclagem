@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planejamento Tributário 2027 — RBT12 Progressivo e Faixas do Simples</title>
+    <title>Planejamento Tributário 2027 — Com Crédito de Despesas Administrativas (9,70% CBS)</title>
     <style>
         :root {
             --primary: #1B4332;
@@ -196,19 +196,19 @@
 <body>
 
 <header>
-    <h1>Planejamento Tributário Anual 2027 (RBT12 Dinâmico Mês a Mês)</h1>
+    <h1>Planejamento Tributário Anual 2027 (Aproveitamento de Crédito em Despesas Admin)</h1>
     <p>DR3 RECICLAGEM E ARTEFATOS DE METAIS LTDA — RBT12 Inicial de Jan/2027 = R$ 586.391,80 (ANEXO I - CGSN nº 140/2018)</p>
 </header>
 
 <div class="container">
 
-    <!-- INFOCARD COM RBT12 E FAIXAS -->
+    <!-- INFOCARD COM CRÉDITOS DE DESPESAS ADMINISTRATIVAS -->
     <div class="info-card">
-        <h3>📈 Atualização do RBT12 em Janeiro/2027 (R$ 586.391,80)</h3>
+        <h3>💡 Aproveitamento Integral de Crédito em Despesas Administrativas (Não-Cumulatividade Plena - LC 214/2025)</h3>
         <ul>
-            <li><strong>Janeiro/2027:</strong> Enquadrado na <strong>3ª Faixa do Anexo I</strong> (Faixa de R$ 360.000,01 a R$ 720.000,00). Alíquota Nominal de <strong>9,50%</strong> e Deducao de <strong>R$ 13.860,00</strong>.</li>
-            <li><strong>Alíquota Efetiva Inicial em Jan/2027:</strong> <span style="font-weight:bold; color:var(--primary);">(R$ 586.391,80 × 9,5% - R$ 13.860,00) ÷ R$ 586.391,80 = 7,1368%</span>.</li>
-            <li><strong>Projeção Dinâmica dos Meses Seguintes (Fev a Dez/2027):</strong> O RBT12 de cada mês é atualizado expurgando o mês correspondente de 2026 e somando o faturamento do novo mês de 2027 (assumindo a média histórica anterior de R$ 48.865,98/mês como substituição de saída).</li>
+            <li><strong>Regra do Simples Híbrido e Lucro Presumido:</strong> As Despesas Administrativas contratadas de PJ (energia, aluguel PJ, serviços de terceiros, tecnologia, fretes e insumos) geram <strong>crédito de 9,70% de CBS e 0,10% de IBS</strong>, abatendo diretamente os débitos do período.</li>
+            <li><strong>Impacto Financeiro:</strong> A apuração líquida do tributo não cumulativo é calculada por:
+                <br><code>CBS Líquida = Débito Próprio (9,70% s/ Vendas) - Crédito Presumido PF (7,0%) - Crédito Compras PJ (9,70%) - Crédito Despesas Admin PJ (9,70%)</code></li>
         </ul>
     </div>
 
@@ -216,14 +216,14 @@
     <div class="preset-bar">
         <label>Carregar Cenários de Virada Rápidos (Jan a Dez):</label>
         <button class="btn-preset" onclick="carregarCenario('base')">1. Cenário Base Atual (Simples Puro Vence)</button>
-        <button class="btn-preset" onclick="carregarCenario('hibrido')">2. Virada para Simples Híbrido (Mais Compras PJ)</button>
+        <button class="btn-preset" onclick="carregarCenario('hibrido')">2. Virada para Simples Híbrido (Mais Compras/Despesas PJ)</button>
         <button class="btn-preset" onclick="carregarCenario('lp')">3. Virada para Lucro Presumido (6ª Faixa + ICMS)</button>
     </div>
 
     <!-- TABELA 1: ENTRADAS DE JANEIRO A DEZEMBRO -->
     <div class="section-box">
         <div class="section-title">
-            <span>1. Entradas Mensais (Janeiro a Dezembro) e Evolução do RBT12</span>
+            <span>1. Entradas Mensais (Janeiro a Dezembro) - Preencha Mês a Mês</span>
         </div>
         <table>
             <thead>
@@ -316,7 +316,7 @@
                     <td id="tot-cpj">R$ 180.000,00</td>
                 </tr>
                 <tr>
-                    <td>Folha de Pagamento Bruta</td>
+                    <td>Folha Bruta (2 Salários Mínimos)</td>
                     <td><input class="table-input" id="folha-1" value="3036.00" onchange="recalcularTudo()"></td>
                     <td><input class="table-input" id="folha-2" value="3036.00" onchange="recalcularTudo()"></td>
                     <td><input class="table-input" id="folha-3" value="3036.00" onchange="recalcularTudo()"></td>
@@ -331,6 +331,22 @@
                     <td><input class="table-input" id="folha-12" value="3036.00" onchange="recalcularTudo()"></td>
                     <td id="tot-folha">R$ 36.432,00</td>
                 </tr>
+                <tr style="background-color: #FFF9E6;">
+                    <td>Despesas Administrativas PJ (Gera Crédito)</td>
+                    <td><input class="table-input" id="desp-1" value="5000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="desp-2" value="5000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="desp-3" value="5000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="desp-4" value="5000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="desp-5" value="5000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="desp-6" value="5000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="desp-7" value="5000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="desp-8" value="5000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="desp-9" value="5000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="desp-10" value="5000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="desp-11" value="5000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="desp-12" value="5000.00" onchange="recalcularTudo()"></td>
+                    <td id="tot-desp" style="font-weight:bold;">R$ 60.000,00</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -344,7 +360,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>Tributo / Custo Patronal Integrante</th>
+                    <th>Tributo / Custo / Resultado Operacional</th>
                     <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
                     <th>Jul</th><th>Ago</th><th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
                     <th>TOTAL ANUAL</th>
@@ -359,13 +375,13 @@
     <!-- CAMPO 3: SIMPLES NACIONAL HÍBRIDO DISCRIMINADO MÊS A MÊS -->
     <div class="section-box" id="box-hibrido">
         <div class="section-title">
-            <span>3. Simples Nacional Híbrido <span class="badge-anexo">ANEXO I Reduzido + CBS/IBS Não Cumulativo (LC 214/2025)</span></span>
+            <span>3. Simples Nacional Híbrido <span class="badge-anexo">ANEXO I Reduzido + CBS/IBS Não Cumulativo com Crédito de Despesas</span></span>
             <span id="tot-hibrido-anual" style="font-size:1.1rem; font-weight:bold;">R$ 0,00</span>
         </div>
         <table>
             <thead>
                 <tr>
-                    <th>Componente / Tributo Discriminado</th>
+                    <th>Componente / Tributo / Resultado Operacional</th>
                     <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
                     <th>Jul</th><th>Ago</th><th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
                     <th>TOTAL ANUAL</th>
@@ -380,13 +396,13 @@
     <!-- CAMPO 4: LUCRO PRESUMIDO DISCRIMINADO MÊS A MÊS -->
     <div class="section-box" id="box-lp">
         <div class="section-title">
-            <span>4. Lucro Presumido (Regime Geral com CPP Patronal de 20% + RAT/Terceiros)</span>
+            <span>4. Lucro Presumido (Regime Geral com Crédito de Compras e Despesas Admin)</span>
             <span id="tot-lp-anual" style="font-size:1.1rem; font-weight:bold;">R$ 0,00</span>
         </div>
         <table>
             <thead>
                 <tr>
-                    <th>Tributo / Encargo Folha Integrante</th>
+                    <th>Tributo / Encargo Folha / Resultado Operacional</th>
                     <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
                     <th>Jul</th><th>Ago</th><th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
                     <th>TOTAL ANUAL</th>
@@ -399,7 +415,7 @@
     </div>
 
     <div class="footer-note">
-        <p>Desenvolvido para DR3 Reciclagem e Artefatos de Metais Ltda — Estudo de Viabilidade Fiscal 2027 com RBT12 Base Inicial de R$ 586.391,80 (CGSN 140/2018 e LC 214/2025).</p>
+        <p>Desenvolvido para DR3 Reciclagem e Artefatos de Metais Ltda — Estudo de Viabilidade Fiscal 2027 com Crédito de Despesas Administrativas (CGSN 140/2018 e LC 214/2025).</p>
     </div>
 
 </div>
@@ -411,12 +427,12 @@
 
     function carregarCenario(tipo) {
         const meses = 12;
-        let vRpa = 63310.40, vCpf = 35000.00, vCpj = 15000.00, vFolha = 3036.00;
+        let vRpa = 63310.40, vCpf = 35000.00, vCpj = 15000.00, vFolha = 3036.00, vDesp = 5000.00;
 
         if (tipo === 'hibrido') {
-            vRpa = 63310.40; vCpf = 2000.00; vCpj = 58000.00; vFolha = 3036.00;
+            vRpa = 63310.40; vCpf = 2000.00; vCpj = 45000.00; vFolha = 3036.00; vDesp = 12000.00;
         } else if (tipo === 'lp') {
-            vRpa = 350000.00; vCpf = 20000.00; vCpj = 250000.00; vFolha = 3036.00;
+            vRpa = 350000.00; vCpf = 20000.00; vCpj = 200000.00; vFolha = 3036.00; vDesp = 50000.00;
         }
 
         for (let i = 1; i <= meses; i++) {
@@ -424,33 +440,35 @@
             document.getElementById(`cpf-${i}`).value = vCpf.toFixed(2);
             document.getElementById(`cpj-${i}`).value = vCpj.toFixed(2);
             document.getElementById(`folha-${i}`).value = vFolha.toFixed(2);
+            document.getElementById(`desp-${i}`).value = vDesp.toFixed(2);
         }
         recalcularTudo();
     }
 
     function recalcularTudo() {
         const meses = 12;
-        let rpa = [], cpf = [], cpj = [], folha = [];
-        let totRpa = 0, totCpf = 0, totCpj = 0, totFolha = 0;
+        let rpa = [], cpf = [], cpj = [], folha = [], desp = [];
+        let totRpa = 0, totCpf = 0, totCpj = 0, totFolha = 0, totDesp = 0;
 
         for (let i = 1; i <= meses; i++) {
             let valRpa = parseFloat(document.getElementById(`rpa-${i}`).value) || 0;
             let valCpf = parseFloat(document.getElementById(`cpf-${i}`).value) || 0;
             let valCpj = parseFloat(document.getElementById(`cpj-${i}`).value) || 0;
             let valFolha = parseFloat(document.getElementById(`folha-${i}`).value) || 0;
+            let valDesp = parseFloat(document.getElementById(`desp-${i}`).value) || 0;
 
-            rpa.push(valRpa); cpf.push(valCpf); cpj.push(valCpj); folha.push(valFolha);
-            totRpa += valRpa; totCpf += valCpf; totCpj += valCpj; totFolha += valFolha;
+            rpa.push(valRpa); cpf.push(valCpf); cpj.push(valCpj); folha.push(valFolha); desp.push(valDesp);
+            totRpa += valRpa; totCpf += valCpf; totCpj += valCpj; totFolha += valFolha; totDesp += valDesp;
         }
 
         document.getElementById('tot-rpa').innerText = fmt(totRpa);
         document.getElementById('tot-cpf').innerText = fmt(totCpf);
         document.getElementById('tot-cpj').innerText = fmt(totCpj);
         document.getElementById('tot-folha').innerText = fmt(totFolha);
+        document.getElementById('tot-desp').innerText = fmt(totDesp);
 
-        // RBT12 Inicial em Janeiro/2027 informado pelo usuário = R$ 586.391,80
         let rbt12Base = 586391.80;
-        let mediaSaidaMes = rbt12Base / 12; // R$ 48.865,98 expurgado mês a mês
+        let mediaSaidaMes = rbt12Base / 12;
 
         let rbt12Array = [];
         let aliqEfetArray = [];
@@ -459,12 +477,10 @@
 
         for (let i = 0; i < meses; i++) {
             if (i > 0) {
-                // Atualiza o RBT12 retirando a média do mês antigo e somando o faturamento do novo mês de 2027
                 currentRbt12 = currentRbt12 - mediaSaidaMes + rpa[i-1];
             }
             rbt12Array.push(currentRbt12);
 
-            // Tabela do Anexo I - Resolução CGSN nº 140/2018
             let aliqNom = 0.095, ded = 13860;
             if (currentRbt12 <= 180000) { aliqNom = 0.04; ded = 0; }
             else if (currentRbt12 <= 360000) { aliqNom = 0.073; ded = 5940; }
@@ -485,20 +501,20 @@
         document.getElementById('rbt12-medio').innerText = fmt(mediaRbt12);
         document.getElementById('alef-med').innerText = (mediaAliq * 100).toFixed(2) + "%";
 
-        // Arrays para apuração mensal
-        let irpjPuro = [], csllPuro = [], cbsPuro = [], cppPuro = [], icmsPuro = [], ibsPuro = [], fgtsPuro = [], dasPuroTot = [];
-        let dasReduzido = [], debCbs = [], credCbsPf = [], credCbsPj = [], cbsLiq = [];
-        let debIbs = [], credIbsPj = [], ibsLiq = [], fgtsHibrido = [], hibridoTot = [];
-        let irpjLp = [], csllLp = [], icmsLp = [], cppLp = [], ratTerceirosLp = [], fgtsLp = [], lpTot = [];
+        // Arrays de Tributos e DRE Líquida
+        let irpjPuro = [], csllPuro = [], cbsPuro = [], cppPuro = [], icmsPuro = [], ibsPuro = [], fgtsPuro = [], dasPuroTot = [], lucroPuro = [];
+        let dasReduzido = [], debCbs = [], credCbsPf = [], credCbsPj = [], credCbsDesp = [], cbsLiq = [];
+        let debIbs = [], credIbsPj = [], credIbsDesp = [], ibsLiq = [], fgtsHibrido = [], hibridoTot = [], lucroHibrido = [];
+        let irpjLp = [], csllLp = [], icmsLp = [], cppLp = [], ratTerceirosLp = [], fgtsLp = [], lpTot = [], lucroLp = [];
 
         for (let i = 0; i < meses; i++) {
             let mRpa = rpa[i];
             let mCpf = cpf[i];
             let mCpj = cpj[i];
             let mFolha = folha[i];
+            let mDesp = desp[i];
             let mAliqEfet = aliqEfetArray[i];
 
-            // Partilha Anexo I - CGSN 140/2018
             let part = { irpj: 0.055, csll: 0.035, cbs: 0.1533, cpp: 0.420, icms: 0.335, ibs: 0.0017 };
             if (rbt12Array[i] > 3600000) {
                 part = { irpj: 0.1358, csll: 0.1006, cbs: 0.3402, cpp: 0.4234, icms: 0, ibs: 0 };
@@ -514,30 +530,43 @@
             icmsPuro.push(mDasPuro * part.icms);
             ibsPuro.push(mDasPuro * part.ibs);
             fgtsPuro.push(mFgtsPuro);
-            dasPuroTot.push(mDasPuro + mFgtsPuro);
 
-            // 2. Simples Híbrido
+            let mTotPuroImp = mDasPuro + mFgtsPuro;
+            dasPuroTot.push(mTotPuroImp);
+            lucroPuro.push(mRpa - mCpf - mCpj - mFolha - mDesp - mTotPuroImp);
+
+            // 2. Simples Híbrido com Crédito de Despesas Admin (9,70% CBS + 0,10% IBS)
             let mDasRed = mDasPuro * (1 - 0.1550);
             dasReduzido.push(mDasRed);
 
             let mDebCbs = mRpa * 0.0970;
             let mCredCbsPf = mCpf * 0.0700;
             let mCredCbsPj = mCpj * 0.0970;
-            let mCbsLiq = mDebCbs - mCredCbsPf - mCredCbsPj;
+            let mCredCbsDesp = mDesp * 0.0970; // Crédito de 9,70% sobre Despesas Admin!
+            let mCbsLiq = Math.max(0, mDebCbs - mCredCbsPf - mCredCbsPj - mCredCbsDesp);
 
-            debCbs.push(mDebCbs); credCbsPf.push(mCredCbsPf); credCbsPj.push(mCredCbsPj); cbsLiq.push(mCbsLiq);
+            debCbs.push(mDebCbs);
+            credCbsPf.push(mCredCbsPf);
+            credCbsPj.push(mCredCbsPj);
+            credCbsDesp.push(mCredCbsDesp);
+            cbsLiq.push(mCbsLiq);
 
             let mDebIbs = mRpa * 0.0010;
             let mCredIbsPj = mCpj * 0.0010;
-            let mIbsLiq = mDebIbs - mCredIbsPj;
+            let mCredIbsDesp = mDesp * 0.0010; // Crédito de 0,10% sobre Despesas Admin!
+            let mIbsLiq = Math.max(0, mDebIbs - mCredIbsPj - mCredIbsDesp);
 
-            debIbs.push(mDebIbs); credIbsPj.push(mCredIbsPj); ibsLiq.push(mIbsLiq);
+            debIbs.push(mDebIbs);
+            credIbsPj.push(mCredIbsPj);
+            credIbsDesp.push(mCredIbsDesp);
+            ibsLiq.push(mIbsLiq);
             fgtsHibrido.push(mFgtsPuro);
 
             let mHibTot = mDasRed + mCbsLiq + mIbsLiq + mFgtsPuro;
             hibridoTot.push(mHibTot);
+            lucroHibrido.push(mRpa - mCpf - mCpj - mFolha - mDesp - mHibTot);
 
-            // 3. Lucro Presumido
+            // 3. Lucro Presumido com Créditos
             let mIrpj = mRpa * 0.08 * 0.15;
             let mCsll = mRpa * 0.12 * 0.09;
             let mIcms = mRpa > 200000 ? mRpa * 0.04 : mRpa * 0.07;
@@ -550,11 +579,17 @@
 
             let mLpTot = mIrpj + mCsll + mCbsLiq + mIbsLiq + mIcms + mCppLp + mRatLp + mFgtsLp;
             lpTot.push(mLpTot);
+            lucroLp.push(mRpa - mCpf - mCpj - mFolha - mDesp - mLpTot);
         }
 
-        function buildRow(label, arrValues, isBold = false, isSub = false) {
+        function buildRow(label, arrValues, isBold = false, isSub = false, isLucro = false) {
             let sum = arrValues.reduce((a, b) => a + b, 0);
-            let style = isBold ? "font-weight:bold; background-color:#F2F7F4;" : "";
+            let style = "";
+            if (isLucro) {
+                style = sum >= 0 ? "font-weight:bold; background-color:#D1E7DD; color:#0F5132;" : "font-weight:bold; background-color:#F8D7DA; color:#842029;";
+            } else if (isBold) {
+                style = "font-weight:bold; background-color:#F2F7F4;";
+            }
             let prefix = isSub ? "&nbsp;&nbsp;└─ " : "";
             let html = `<tr style="${style}"><td>${prefix}${label}</td>`;
             for (let v of arrValues) {
@@ -573,7 +608,8 @@
         htmlPuro += buildRow("ICMS (Partilha Anexo I - CGSN 140)", icmsPuro);
         htmlPuro += buildRow("IBS (Partilha Anexo I - CGSN 140)", ibsPuro);
         htmlPuro += buildRow("FGTS Obrigações Trabalhistas (8,0%)", fgtsPuro);
-        htmlPuro += buildRow("TOTAL SIMPLES PURO + ENCARGOS FOLHA", dasPuroTot, true);
+        htmlPuro += buildRow("TOTAL TRIBUTOS + FGTS (SIMPLES PURO)", dasPuroTot, true);
+        htmlPuro += buildRow("(=) RESULTADO LÍQUIDO FINAL (LUCRO OPERACIONAL)", lucroPuro, true, false, true);
         document.getElementById('body-puro').innerHTML = htmlPuro;
 
         // Render Simples Híbrido
@@ -581,13 +617,16 @@
         htmlHibrido += buildRow("DAS Reduzido (Inclui CPP Patronal no DAS)", dasReduzido, false, true);
         htmlHibrido += buildRow("(+) CBS Débito Próprio (9,70%)", debCbs, false, true);
         htmlHibrido += buildRow("(-) CBS Crédito Presumido PF (7,0%)", credCbsPf.map(v => -v), false, true);
-        htmlHibrido += buildRow("(-) CBS Crédito Integral PJ (9,70%)", credCbsPj.map(v => -v), false, true);
+        htmlHibrido += buildRow("(-) CBS Crédito Integral Compras PJ (9,70%)", credCbsPj.map(v => -v), false, true);
+        htmlHibrido += buildRow("(-) CBS Crédito Despesas Admin PJ (9,70%)", credCbsDesp.map(v => -v), false, true);
         htmlHibrido += buildRow("(=) CBS Líquida a Pagar", cbsLiq, true, true);
         htmlHibrido += buildRow("(+) IBS Débito Próprio (0,10%)", debIbs, false, true);
-        htmlHibrido += buildRow("(-) IBS Crédito Integral PJ (0,10%)", credIbsPj.map(v => -v), false, true);
+        htmlHibrido += buildRow("(-) IBS Crédito Integral Compras PJ (0,10%)", credIbsPj.map(v => -v), false, true);
+        htmlHibrido += buildRow("(-) IBS Crédito Despesas Admin PJ (0,10%)", credIbsDesp.map(v => -v), false, true);
         htmlHibrido += buildRow("(=) IBS Líquido a Pagar", ibsLiq, true, true);
         htmlHibrido += buildRow("FGTS Obrigações Trabalhistas (8,0%)", fgtsHibrido, false, true);
-        htmlHibrido += buildRow("TOTAL SIMPLES HÍBRIDO + ENCARGOS FOLHA", hibridoTot, true);
+        htmlHibrido += buildRow("TOTAL TRIBUTOS + FGTS (SIMPLES HÍBRIDO)", hibridoTot, true);
+        htmlHibrido += buildRow("(=) RESULTADO LÍQUIDO FINAL (LUCRO OPERACIONAL)", lucroHibrido, true, false, true);
         document.getElementById('body-hibrido').innerHTML = htmlHibrido;
         document.getElementById('tot-hibrido-anual').innerText = fmt(hibridoTot.reduce((a,b)=>a+b,0));
 
@@ -595,30 +634,31 @@
         let htmlLp = "";
         htmlLp += buildRow("IRPJ (15% s/ 8% presunção)", irpjLp, false, true);
         htmlLp += buildRow("CSLL (9% s/ 12% presunção)", csllLp, false, true);
-        htmlLp += buildRow("CBS Líquida (9,7% com créditos)", cbsLiq, false, true);
-        htmlLp += buildRow("IBS Líquido (0,1% com créditos)", ibsLiq, false, true);
+        htmlLp += buildRow("CBS Líquida (9,7% com créditos Compras/Despesas)", cbsLiq, false, true);
+        htmlLp += buildRow("IBS Líquido (0,1% com créditos Compras/Despesas)", ibsLiq, false, true);
         htmlLp += buildRow("ICMS Próprio Estimado", icmsLp, false, true);
         htmlLp += buildRow("CPP Patronal POR FORA (20,0% s/ Folha)", cppLp, true, true);
         htmlLp += buildRow("RAT (2,0%) + Terceiros (5,8%) s/ Folha", ratTerceirosLp, false, true);
         htmlLp += buildRow("FGTS Obrigações Trabalhistas (8,0%)", fgtsLp, false, true);
-        htmlLp += buildRow("TOTAL LUCRO PRESUMIDO + ENCARGOS FOLHA", lpTot, true);
+        htmlLp += buildRow("TOTAL TRIBUTOS + ENCARGOS (LUCRO PRESUMIDO)", lpTot, true);
+        htmlLp += buildRow("(=) RESULTADO LÍQUIDO FINAL (LUCRO OPERACIONAL)", lucroLp, true, false, true);
         document.getElementById('body-lp').innerHTML = htmlLp;
         document.getElementById('tot-lp-anual').innerText = fmt(lpTot.reduce((a,b)=>a+b,0));
 
         // Vencedor Highlights
-        let sumPuro = dasPuroTot.reduce((a,b)=>a+b,0);
-        let sumHib = hibridoTot.reduce((a,b)=>a+b,0);
-        let sumLp = lpTot.reduce((a,b)=>a+b,0);
+        let sumLucroPuro = lucroPuro.reduce((a,b)=>a+b,0);
+        let sumLucroHib = lucroHibrido.reduce((a,b)=>a+b,0);
+        let sumLucroLp = lucroLp.reduce((a,b)=>a+b,0);
 
         document.getElementById('box-puro').classList.remove('winner');
         document.getElementById('box-hibrido').classList.remove('winner');
         document.getElementById('box-lp').classList.remove('winner');
         document.getElementById('badge-puro').style.display = 'none';
 
-        if (sumPuro <= sumHib && sumPuro <= sumLp) {
+        if (sumLucroPuro >= sumLucroHib && sumLucroPuro >= sumLucroLp) {
             document.getElementById('box-puro').classList.add('winner');
             document.getElementById('badge-puro').style.display = 'inline-block';
-        } else if (sumHib <= sumPuro && sumHib <= sumLp) {
+        } else if (sumLucroHib >= sumLucroPuro && sumLucroHib >= sumLucroLp) {
             document.getElementById('box-hibrido').classList.add('winner');
         } else {
             document.getElementById('box-lp').classList.add('winner');
