@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Planejamento Tributário 2027 - 12 Meses com Cenários de Virada</title>
+    <title>Planejamento Tributário 2027-2033 — Enquadramento de Anexo CGSN 140/2018</title>
     <style>
         :root {
             --primary: #1B4332;
@@ -85,6 +85,20 @@
             color: white;
         }
 
+        .info-card {
+            background: #EBF8F1;
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+            font-size: 0.88rem;
+        }
+
+        .info-card h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
         .section-box {
             background: var(--card-bg);
             padding: 1.2rem;
@@ -161,6 +175,15 @@
             text-transform: uppercase;
         }
 
+        .badge-anexo {
+            background: #2D6A4F;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+        }
+
         .footer-note {
             text-align: center;
             font-size: 0.8rem;
@@ -173,13 +196,29 @@
 <body>
 
 <header>
-    <h1>Planejamento Tributário Anual 2027 (Jan a Dez)</h1>
-    <p>DR3 RECICLAGEM E ARTEFATOS DE METAIS LTDA — Entrada Mês a Mês com Simulação de Cenários de Virada (LC 214/2025 & CGSN 140/2018)</p>
+    <h1>Planejamento Tributário Anual (2027 a 2033)</h1>
+    <p>DR3 RECICLAGEM E ARTEFATOS DE METAIS LTDA — Enquadramento de Anexo (Resolução CGSN nº 140/2018) & Reforma Tributária (LC 214/2025)</p>
 </header>
 
 <div class="container">
 
-    <!-- BOTÕES DE PRESET DE CENÁRIOS -->
+    <!-- EXPLICATIVO DO ENQUADRAMENTO DE ANEXO E PERÍODO DE TRANSIÇÃO -->
+    <div class="info-card">
+        <h3>📌 Enquadramento Legal e Período de Transição (2027 a 2033)</h3>
+        <ul>
+            <li><strong>Atividade da Empresa:</strong> Comércio Atacadista de Resíduos e Sucatas (CNAE 3831-9/01, 3832-7/00, 4687-7/01, 4687-7/02).</li>
+            <li><strong>Anexo de Enquadramento Oficial:</strong> Enquadrada no <strong>ANEXO I da Resolução CGSN nº 140/2018</strong> (Comércio).</li>
+            <li><strong>Período de Transição 2027 a 2033:</strong>
+                <ul>
+                    <li><strong>2027 a 2028:</strong> Início da cobrança de CBS (0,9%) e IBS (0,1%) para teste do sistema. No Simples Puro, nada muda. No Simples Híbrido, desconta-se a parcela correspondente do DAS.</li>
+                    <li><strong>2029 a 2032:</strong> Transição gradual do ICMS/ISS para IBS/CBS. No Simples Híbrido, as alíquotas do DAS diminuem proporcionalmente à entrada das alíquotas cheias do IBS/CBS por fora.</li>
+                    <li><strong>2033:</strong> Extinção completa do PIS/COFINS e ICMS/ISS tradicionais. O Simples Híbrido atinge 100% da segregação do IBS/CBS por fora.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- PRESETS DE CENÁRIOS -->
     <div class="preset-bar">
         <label>Carregar Cenários de Virada Rápidos (Jan a Dez):</label>
         <button class="btn-preset" onclick="carregarCenario('base')">1. Cenário Base Atual (Simples Puro Vence)</button>
@@ -257,13 +296,13 @@
     <!-- CAMPO 2: SIMPLES NACIONAL PURO DISCRIMINADO MÊS A MÊS -->
     <div class="section-box" id="box-puro">
         <div class="section-title">
-            <span>2. Simples Nacional Puro (Anexo I - Resolução CGSN 140/2018)</span>
+            <span>2. Simples Nacional Puro <span class="badge-anexo">ANEXO I - Resolução CGSN nº 140/2018</span></span>
             <span class="badge-winner" id="badge-puro">Mais Econômico</span>
         </div>
         <table>
             <thead>
                 <tr>
-                    <th>Tributo Integrante / Partilha CGSN 140</th>
+                    <th>Tributo Integrante (Partilha Anexo I - CGSN 140)</th>
                     <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
                     <th>Jul</th><th>Ago</th><th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
                     <th>TOTAL ANUAL</th>
@@ -278,7 +317,7 @@
     <!-- CAMPO 3: SIMPLES NACIONAL HÍBRIDO DISCRIMINADO MÊS A MÊS -->
     <div class="section-box" id="box-hibrido">
         <div class="section-title">
-            <span>3. Simples Nacional Híbrido (DAS Reduzido + CBS e IBS 'Por Fora')</span>
+            <span>3. Simples Nacional Híbrido <span class="badge-anexo">ANEXO I Reduzido + CBS/IBS Não Cumulativo (LC 214/2025)</span></span>
             <span id="tot-hibrido-anual" style="font-size:1.1rem; font-weight:bold;">R$ 0,00</span>
         </div>
         <table>
@@ -318,7 +357,7 @@
     </div>
 
     <div class="footer-note">
-        <p>Desenvolvido para DR3 Reciclagem e Artefatos de Metais Ltda — Estudo de Viabilidade Fiscal 2027 conforme LC 214/2025 e CGSN 140/2018.</p>
+        <p>Desenvolvido para DR3 Reciclagem e Artefatos de Metais Ltda — Estudo de Viabilidade Fiscal 2027-2033 conforme ANEXO I da Resolução CGSN nº 140/2018 e LC 214/2025.</p>
     </div>
 
 </div>
@@ -375,7 +414,7 @@
             let mCpf = cpf[i];
             let mCpj = cpj[i];
 
-            // 1. Simples Puro
+            // 1. Simples Puro - ANEXO I (Comércio - Resolução CGSN 140/2018)
             let rbt12Sim = mRpa * 12; // projeção anual
             let aliqNom = 0.095, ded = 13860;
             let part = { irpj: 0.055, csll: 0.035, cbs: 0.1533, cpp: 0.420, icms: 0.335, ibs: 0.0017 };
@@ -398,7 +437,7 @@
             ibsPuro.push(mDasPuro * part.ibs);
             dasPuroTot.push(mDasPuro);
 
-            // 2. Simples Híbrido
+            // 2. Simples Híbrido - ANEXO I Reduzido (Exclui PIS/COFINS/CBS do Anexo I)
             let mDasRed = mDasPuro * (1 - 0.1550);
             dasReduzido.push(mDasRed);
 
@@ -421,7 +460,7 @@
             // 3. Lucro Presumido
             let mIrpj = mRpa * 0.08 * 0.15;
             let mCsll = mRpa * 0.12 * 0.09;
-            let mIcms = mRpa > 200000 ? mRpa * 0.04 : mRpa * 0.07; // ICMS incentivado a 4% se faturamento maior
+            let mIcms = mRpa > 200000 ? mRpa * 0.04 : mRpa * 0.07;
             let mLpTot = mIrpj + mCsll + mCbsLiq + mIbsLiq + mIcms;
 
             irpjLp.push(mIrpj); csllLp.push(mCsll); icmsLp.push(mIcms); lpTot.push(mLpTot);
@@ -441,18 +480,18 @@
 
         // Render Simples Puro
         let htmlPuro = "";
-        htmlPuro += buildRow("IRPJ (Partilha CGSN 140)", irpjPuro);
-        htmlPuro += buildRow("CSLL (Partilha CGSN 140)", csllPuro);
-        htmlPuro += buildRow("CBS (Partilha CGSN 140)", cbsPuro);
-        htmlPuro += buildRow("CPP (Partilha CGSN 140)", cppPuro);
-        htmlPuro += buildRow("ICMS (Partilha CGSN 140)", icmsPuro);
-        htmlPuro += buildRow("IBS (Partilha CGSN 140)", ibsPuro);
-        htmlPuro += buildRow("TOTAL DAS PURO UNIFICADO", dasPuroTot, true);
+        htmlPuro += buildRow("IRPJ (Partilha Anexo I - CGSN 140)", irpjPuro);
+        htmlPuro += buildRow("CSLL (Partilha Anexo I - CGSN 140)", csllPuro);
+        htmlPuro += buildRow("CBS (Partilha Anexo I - CGSN 140)", cbsPuro);
+        htmlPuro += buildRow("CPP (Partilha Anexo I - CGSN 140)", cppPuro);
+        htmlPuro += buildRow("ICMS (Partilha Anexo I - CGSN 140)", icmsPuro);
+        htmlPuro += buildRow("IBS (Partilha Anexo I - CGSN 140)", ibsPuro);
+        htmlPuro += buildRow("TOTAL DAS PURO UNIFICADO (ANEXO I)", dasPuroTot, true);
         document.getElementById('body-puro').innerHTML = htmlPuro;
 
         // Render Simples Híbrido
         let htmlHibrido = "";
-        htmlHibrido += buildRow("DAS Reduzido (IRPJ, CSLL, CPP, ICMS)", dasReduzido, false, true);
+        htmlHibrido += buildRow("DAS Reduzido (ANEXO I - Exclui CBS/IBS)", dasReduzido, false, true);
         htmlHibrido += buildRow("(+) CBS Débito Próprio (9,70%)", debCbs, false, true);
         htmlHibrido += buildRow("(-) CBS Crédito Presumido PF (7,0%)", credCbsPf.map(v => -v), false, true);
         htmlHibrido += buildRow("(-) CBS Crédito Integral PJ (9,70%)", credCbsPj.map(v => -v), false, true);
@@ -460,7 +499,7 @@
         htmlHibrido += buildRow("(+) IBS Débito Próprio (0,10%)", debIbs, false, true);
         htmlHibrido += buildRow("(-) IBS Crédito Integral PJ (0,10%)", credIbsPj.map(v => -v), false, true);
         htmlHibrido += buildRow("(=) IBS Líquido a Pagar", ibsLiq, true, true);
-        htmlHibrido += buildRow("TOTAL SIMPLES HÍBRIDO", hibridoTot, true);
+        htmlHibrido += buildRow("TOTAL SIMPLES HÍBRIDO (ANEXO I + NÃO CUMULATIVO)", hibridoTot, true);
         document.getElementById('body-hibrido').innerHTML = htmlHibrido;
         document.getElementById('tot-hibrido-anual').innerText = fmt(hibridoTot.reduce((a,b)=>a+b,0));
 
