@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Planejamento Tributário 2027 - 12 Meses com Cenários de Virada</title>
+    <style>
+        :root {
+            --primary: #1B4332;
+            --primary-light: #2D6A4F;
+            --accent: #52B788;
+            --bg-light: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --text-dark: #212529;
+            --border: #DEE2E6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.4;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.6rem;
+        }
+
+        header p {
+            margin-top: 0.3rem;
+            opacity: 0.85;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1450px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+        }
+
+        .preset-bar {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .preset-bar label {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .btn-preset {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--primary-light);
+            background: white;
+            color: var(--primary);
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.82rem;
+            transition: all 0.2s;
+        }
+
+        .btn-preset:hover {
+            background: var(--primary-light);
+            color: white;
+        }
+
+        .section-box {
+            background: var(--card-bg);
+            padding: 1.2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .section-box.winner {
+            border: 2px solid var(--accent);
+            background-color: #F0FFF4;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 0.8rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            text-align: right;
+        }
+
+        th, td {
+            padding: 0.45rem 0.35rem;
+            border: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        td:first-child {
+            text-align: left;
+            font-weight: 600;
+        }
+
+        input.table-input {
+            width: 72px;
+            padding: 0.25rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            text-align: right;
+            font-weight: bold;
+            font-size: 0.78rem;
+        }
+
+        .total-row {
+            background-color: #E8F5E9;
+            font-weight: bold;
+        }
+
+        .badge-winner {
+            background: var(--accent);
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Planejamento Tributário Anual 2027 (Jan a Dez)</h1>
+    <p>DR3 RECICLAGEM E ARTEFATOS DE METAIS LTDA — Entrada Mês a Mês com Simulação de Cenários de Virada (LC 214/2025 & CGSN 140/2018)</p>
+</header>
+
+<div class="container">
+
+    <!-- BOTÕES DE PRESET DE CENÁRIOS -->
+    <div class="preset-bar">
+        <label>Carregar Cenários de Virada Rápidos (Jan a Dez):</label>
+        <button class="btn-preset" onclick="carregarCenario('base')">1. Cenário Base Atual (Simples Puro Vence)</button>
+        <button class="btn-preset" onclick="carregarCenario('hibrido')">2. Virada para Simples Híbrido (Mais Compras PJ)</button>
+        <button class="btn-preset" onclick="carregarCenario('lp')">3. Virada para Lucro Presumido (6ª Faixa + ICMS)</button>
+    </div>
+
+    <!-- TABELA 1: ENTRADAS DE JANEIRO A DEZEMBRO -->
+    <div class="section-box">
+        <div class="section-title">
+            <span>1. Entradas Mensais (Janeiro a Dezembro) - Preencha Mês a Mês</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Parâmetro de Entrada (R$)</th>
+                    <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
+                    <th>Jul</th><th>Ago</th><th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
+                    <th>TOTAL ANUAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Receita Mensal (RPA)</td>
+                    <td><input class="table-input" id="rpa-1" value="63310.40" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="rpa-2" value="63310.40" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="rpa-3" value="63310.40" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="rpa-4" value="63310.40" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="rpa-5" value="63310.40" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="rpa-6" value="63310.40" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="rpa-7" value="63310.40" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="rpa-8" value="63310.40" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="rpa-9" value="63310.40" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="rpa-10" value="63310.40" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="rpa-11" value="63310.40" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="rpa-12" value="63310.40" onchange="recalcularTudo()"></td>
+                    <td id="tot-rpa">R$ 759.724,80</td>
+                </tr>
+                <tr>
+                    <td>Compras PF / Coletores (Art. 170)</td>
+                    <td><input class="table-input" id="cpf-1" value="35000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpf-2" value="35000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpf-3" value="35000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpf-4" value="35000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpf-5" value="35000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpf-6" value="35000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpf-7" value="35000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpf-8" value="35000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpf-9" value="35000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpf-10" value="35000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpf-11" value="35000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpf-12" value="35000.00" onchange="recalcularTudo()"></td>
+                    <td id="tot-cpf">R$ 420.000,00</td>
+                </tr>
+                <tr>
+                    <td>Compras PJ / Fornecedores</td>
+                    <td><input class="table-input" id="cpj-1" value="15000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpj-2" value="15000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpj-3" value="15000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpj-4" value="15000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpj-5" value="15000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpj-6" value="15000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpj-7" value="15000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpj-8" value="15000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpj-9" value="15000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpj-10" value="15000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpj-11" value="15000.00" onchange="recalcularTudo()"></td>
+                    <td><input class="table-input" id="cpj-12" value="15000.00" onchange="recalcularTudo()"></td>
+                    <td id="tot-cpj">R$ 180.000,00</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- CAMPO 2: SIMPLES NACIONAL PURO DISCRIMINADO MÊS A MÊS -->
+    <div class="section-box" id="box-puro">
+        <div class="section-title">
+            <span>2. Simples Nacional Puro (Anexo I - Resolução CGSN 140/2018)</span>
+            <span class="badge-winner" id="badge-puro">Mais Econômico</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tributo Integrante / Partilha CGSN 140</th>
+                    <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
+                    <th>Jul</th><th>Ago</th><th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
+                    <th>TOTAL ANUAL</th>
+                </tr>
+            </thead>
+            <tbody id="body-puro">
+                <!-- Preenchido via JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- CAMPO 3: SIMPLES NACIONAL HÍBRIDO DISCRIMINADO MÊS A MÊS -->
+    <div class="section-box" id="box-hibrido">
+        <div class="section-title">
+            <span>3. Simples Nacional Híbrido (DAS Reduzido + CBS e IBS 'Por Fora')</span>
+            <span id="tot-hibrido-anual" style="font-size:1.1rem; font-weight:bold;">R$ 0,00</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Componente / Tributo Discriminado</th>
+                    <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
+                    <th>Jul</th><th>Ago</th><th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
+                    <th>TOTAL ANUAL</th>
+                </tr>
+            </thead>
+            <tbody id="body-hibrido">
+                <!-- Preenchido via JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- CAMPO 4: LUCRO PRESUMIDO DISCRIMINADO MÊS A MÊS -->
+    <div class="section-box" id="box-lp">
+        <div class="section-title">
+            <span>4. Lucro Presumido (Regime Geral Não Cumulativo de CBS/IBS)</span>
+            <span id="tot-lp-anual" style="font-size:1.1rem; font-weight:bold;">R$ 0,00</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tributo Integrante</th>
+                    <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
+                    <th>Jul</th><th>Ago</th><th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
+                    <th>TOTAL ANUAL</th>
+                </tr>
+            </thead>
+            <tbody id="body-lp">
+                <!-- Preenchido via JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer-note">
+        <p>Desenvolvido para DR3 Reciclagem e Artefatos de Metais Ltda — Estudo de Viabilidade Fiscal 2027 conforme LC 214/2025 e CGSN 140/2018.</p>
+    </div>
+
+</div>
+
+<script>
+    function fmt(val) {
+        return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    function carregarCenario(tipo) {
+        const meses = 12;
+        let vRpa = 63310.40, vCpf = 35000.00, vCpj = 15000.00;
+
+        if (tipo === 'hibrido') {
+            vRpa = 63310.40; vCpf = 2000.00; vCpj = 58000.00;
+        } else if (tipo === 'lp') {
+            vRpa = 350000.00; vCpf = 20000.00; vCpj = 250000.00;
+        }
+
+        for (let i = 1; i <= meses; i++) {
+            document.getElementById(`rpa-${i}`).value = vRpa.toFixed(2);
+            document.getElementById(`cpf-${i}`).value = vCpf.toFixed(2);
+            document.getElementById(`cpj-${i}`).value = vCpj.toFixed(2);
+        }
+        recalcularTudo();
+    }
+
+    function recalcularTudo() {
+        const meses = 12;
+        let rpa = [], cpf = [], cpj = [];
+        let totRpa = 0, totCpf = 0, totCpj = 0;
+
+        for (let i = 1; i <= meses; i++) {
+            let valRpa = parseFloat(document.getElementById(`rpa-${i}`).value) || 0;
+            let valCpf = parseFloat(document.getElementById(`cpf-${i}`).value) || 0;
+            let valCpj = parseFloat(document.getElementById(`cpj-${i}`).value) || 0;
+
+            rpa.push(valRpa); cpf.push(valCpf); cpj.push(valCpj);
+            totRpa += valRpa; totCpf += valCpf; totCpj += valCpj;
+        }
+
+        document.getElementById('tot-rpa').innerText = fmt(totRpa);
+        document.getElementById('tot-cpf').innerText = fmt(totCpf);
+        document.getElementById('tot-cpj').innerText = fmt(totCpj);
+
+        // Arrays para cada tributo de Jan a Dez
+        let irpjPuro = [], csllPuro = [], cbsPuro = [], cppPuro = [], icmsPuro = [], ibsPuro = [], dasPuroTot = [];
+        let dasReduzido = [], debCbs = [], credCbsPf = [], credCbsPj = [], cbsLiq = [];
+        let debIbs = [], credIbsPj = [], ibsLiq = [], hibridoTot = [];
+        let irpjLp = [], csllLp = [], icmsLp = [], lpTot = [];
+
+        for (let i = 0; i < meses; i++) {
+            let mRpa = rpa[i];
+            let mCpf = cpf[i];
+            let mCpj = cpj[i];
+
+            // 1. Simples Puro
+            let rbt12Sim = mRpa * 12; // projeção anual
+            let aliqNom = 0.095, ded = 13860;
+            let part = { irpj: 0.055, csll: 0.035, cbs: 0.1533, cpp: 0.420, icms: 0.335, ibs: 0.0017 };
+
+            if (rbt12Sim <= 180000) { aliqNom = 0.04; ded = 0; part = { irpj: 0.055, csll: 0.035, cbs: 0.1533, cpp: 0.415, icms: 0.34, ibs: 0.0017 }; }
+            else if (rbt12Sim <= 360000) { aliqNom = 0.073; ded = 5940; part = { irpj: 0.055, csll: 0.035, cbs: 0.1533, cpp: 0.415, icms: 0.34, ibs: 0.0017 }; }
+            else if (rbt12Sim <= 720000) { aliqNom = 0.095; ded = 13860; }
+            else if (rbt12Sim <= 1800000) { aliqNom = 0.107; ded = 22500; }
+            else if (rbt12Sim <= 3600000) { aliqNom = 0.143; ded = 87300; }
+            else { aliqNom = 0.189; ded = 378000; part = { irpj: 0.1358, csll: 0.1006, cbs: 0.3402, cpp: 0.4234, icms: 0, ibs: 0 }; }
+
+            let aliqEfet = rbt12Sim > 0 ? (rbt12Sim * aliqNom - ded) / rbt12Sim : aliqNom;
+            let mDasPuro = mRpa * aliqEfet;
+
+            irpjPuro.push(mDasPuro * part.irpj);
+            csllPuro.push(mDasPuro * part.csll);
+            cbsPuro.push(mDasPuro * part.cbs);
+            cppPuro.push(mDasPuro * part.cpp);
+            icmsPuro.push(mDasPuro * part.icms);
+            ibsPuro.push(mDasPuro * part.ibs);
+            dasPuroTot.push(mDasPuro);
+
+            // 2. Simples Híbrido
+            let mDasRed = mDasPuro * (1 - 0.1550);
+            dasReduzido.push(mDasRed);
+
+            let mDebCbs = mRpa * 0.0970;
+            let mCredCbsPf = mCpf * 0.0700;
+            let mCredCbsPj = mCpj * 0.0970;
+            let mCbsLiq = mDebCbs - mCredCbsPf - mCredCbsPj;
+
+            debCbs.push(mDebCbs); credCbsPf.push(mCredCbsPf); credCbsPj.push(mCredCbsPj); cbsLiq.push(mCbsLiq);
+
+            let mDebIbs = mRpa * 0.0010;
+            let mCredIbsPj = mCpj * 0.0010;
+            let mIbsLiq = mDebIbs - mCredIbsPj;
+
+            debIbs.push(mDebIbs); credIbsPj.push(mCredIbsPj); ibsLiq.push(mIbsLiq);
+
+            let mHibTot = mDasRed + mCbsLiq + mIbsLiq;
+            hibridoTot.push(mHibTot);
+
+            // 3. Lucro Presumido
+            let mIrpj = mRpa * 0.08 * 0.15;
+            let mCsll = mRpa * 0.12 * 0.09;
+            let mIcms = mRpa > 200000 ? mRpa * 0.04 : mRpa * 0.07; // ICMS incentivado a 4% se faturamento maior
+            let mLpTot = mIrpj + mCsll + mCbsLiq + mIbsLiq + mIcms;
+
+            irpjLp.push(mIrpj); csllLp.push(mCsll); icmsLp.push(mIcms); lpTot.push(mLpTot);
+        }
+
+        function buildRow(label, arrValues, isBold = false, isSub = false) {
+            let sum = arrValues.reduce((a, b) => a + b, 0);
+            let style = isBold ? "font-weight:bold; background-color:#F2F7F4;" : "";
+            let prefix = isSub ? "&nbsp;&nbsp;└─ " : "";
+            let html = `<tr style="${style}"><td>${prefix}${label}</td>`;
+            for (let v of arrValues) {
+                html += `<td>${fmt(v)}</td>`;
+            }
+            html += `<td>${fmt(sum)}</td></tr>`;
+            return html;
+        }
+
+        // Render Simples Puro
+        let htmlPuro = "";
+        htmlPuro += buildRow("IRPJ (Partilha CGSN 140)", irpjPuro);
+        htmlPuro += buildRow("CSLL (Partilha CGSN 140)", csllPuro);
+        htmlPuro += buildRow("CBS (Partilha CGSN 140)", cbsPuro);
+        htmlPuro += buildRow("CPP (Partilha CGSN 140)", cppPuro);
+        htmlPuro += buildRow("ICMS (Partilha CGSN 140)", icmsPuro);
+        htmlPuro += buildRow("IBS (Partilha CGSN 140)", ibsPuro);
+        htmlPuro += buildRow("TOTAL DAS PURO UNIFICADO", dasPuroTot, true);
+        document.getElementById('body-puro').innerHTML = htmlPuro;
+
+        // Render Simples Híbrido
+        let htmlHibrido = "";
+        htmlHibrido += buildRow("DAS Reduzido (IRPJ, CSLL, CPP, ICMS)", dasReduzido, false, true);
+        htmlHibrido += buildRow("(+) CBS Débito Próprio (9,70%)", debCbs, false, true);
+        htmlHibrido += buildRow("(-) CBS Crédito Presumido PF (7,0%)", credCbsPf.map(v => -v), false, true);
+        htmlHibrido += buildRow("(-) CBS Crédito Integral PJ (9,70%)", credCbsPj.map(v => -v), false, true);
+        htmlHibrido += buildRow("(=) CBS Líquida a Pagar", cbsLiq, true, true);
+        htmlHibrido += buildRow("(+) IBS Débito Próprio (0,10%)", debIbs, false, true);
+        htmlHibrido += buildRow("(-) IBS Crédito Integral PJ (0,10%)", credIbsPj.map(v => -v), false, true);
+        htmlHibrido += buildRow("(=) IBS Líquido a Pagar", ibsLiq, true, true);
+        htmlHibrido += buildRow("TOTAL SIMPLES HÍBRIDO", hibridoTot, true);
+        document.getElementById('body-hibrido').innerHTML = htmlHibrido;
+        document.getElementById('tot-hibrido-anual').innerText = fmt(hibridoTot.reduce((a,b)=>a+b,0));
+
+        // Render Lucro Presumido
+        let htmlLp = "";
+        htmlLp += buildRow("IRPJ (15% s/ 8% presunção)", irpjLp, false, true);
+        htmlLp += buildRow("CSLL (9% s/ 12% presunção)", csllLp, false, true);
+        htmlLp += buildRow("CBS Líquida (9,7% com créditos)", cbsLiq, false, true);
+        htmlLp += buildRow("IBS Líquido (0,1% com créditos)", ibsLiq, false, true);
+        htmlLp += buildRow("ICMS Próprio Estimado", icmsLp, false, true);
+        htmlLp += buildRow("TOTAL LUCRO PRESUMIDO", lpTot, true);
+        document.getElementById('body-lp').innerHTML = htmlLp;
+        document.getElementById('tot-lp-anual').innerText = fmt(lpTot.reduce((a,b)=>a+b,0));
+
+        // Vencedor Highlights
+        let sumPuro = dasPuroTot.reduce((a,b)=>a+b,0);
+        let sumHib = hibridoTot.reduce((a,b)=>a+b,0);
+        let sumLp = lpTot.reduce((a,b)=>a+b,0);
+
+        document.getElementById('box-puro').classList.remove('winner');
+        document.getElementById('box-hibrido').classList.remove('winner');
+        document.getElementById('box-lp').classList.remove('winner');
+        document.getElementById('badge-puro').style.display = 'none';
+
+        if (sumPuro <= sumHib && sumPuro <= sumLp) {
+            document.getElementById('box-puro').classList.add('winner');
+            document.getElementById('badge-puro').style.display = 'inline-block';
+        } else if (sumHib <= sumPuro && sumHib <= sumLp) {
+            document.getElementById('box-hibrido').classList.add('winner');
+        } else {
+            document.getElementById('box-lp').classList.add('winner');
+        }
+    }
+
+    // Inicializar
+    recalcularTudo();
+</script>
+
+</body>
+</html>
