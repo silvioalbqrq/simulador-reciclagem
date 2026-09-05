@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planejamento Tributário 2027 — Com Crédito de Despesas Administrativas (9,70% CBS)</title>
+    <title>Planejamento Tributário 2027 — DR3 Reciclagem</title>
     <style>
         :root {
             --primary: #1B4332;
@@ -161,11 +161,6 @@
             font-size: 0.78rem;
         }
 
-        .total-row {
-            background-color: #E8F5E9;
-            font-weight: bold;
-        }
-
         .badge-winner {
             background: var(--accent);
             color: white;
@@ -196,19 +191,29 @@
 <body>
 
 <header>
-    <h1>Planejamento Tributário Anual 2027 (Aproveitamento de Crédito em Despesas Admin)</h1>
+    <h1>Planejamento Tributário Anual 2027</h1>
     <p>DR3 RECICLAGEM E ARTEFATOS DE METAIS LTDA — RBT12 Inicial de Jan/2027 = R$ 586.391,80 (ANEXO I - CGSN nº 140/2018)</p>
 </header>
 
 <div class="container">
 
-    <!-- INFOCARD COM CRÉDITOS DE DESPESAS ADMINISTRATIVAS -->
+    <!-- 1. INFOCARD DESPESAS ADMINISTRATIVAS -->
     <div class="info-card">
-        <h3>💡 Aproveitamento Integral de Crédito em Despesas Administrativas (Não-Cumulatividade Plena - LC 214/2025)</h3>
+        <h3>🏢 Inclusão de Despesas Administrativas no Fluxo Financeiro</h3>
         <ul>
-            <li><strong>Regra do Simples Híbrido e Lucro Presumido:</strong> As Despesas Administrativas contratadas de PJ (energia, aluguel PJ, serviços de terceiros, tecnologia, fretes e insumos) geram <strong>crédito de 9,70% de CBS e 0,10% de IBS</strong>, abatendo diretamente os débitos do período.</li>
-            <li><strong>Impacto Financeiro:</strong> A apuração líquida do tributo não cumulativo é calculada por:
-                <br><code>CBS Líquida = Débito Próprio (9,70% s/ Vendas) - Crédito Presumido PF (7,0%) - Crédito Compras PJ (9,70%) - Crédito Despesas Admin PJ (9,70%)</code></li>
+            <li><strong>Múltiplos Parâmetros de Entrada:</strong> O modelo inclui Receita Bruta, Compras PF, Compras PJ, Folha de Pagamento e <strong>Despesas Administrativas (Editáveis de Jan a Dez)</strong>.</li>
+            <li><strong>Cálculo do Lucro Operacional Líquido:</strong>
+                <br><code>Resultado Líquido = Receita Bruta - Compras (PF/PJ) - Folha Bruta - Despesas Administrativas - Tributos e Encargos</code></li>
+        </ul>
+    </div>
+
+    <!-- 2. INFOCARD ATUALIZAÇÃO DO RBT12 (LOGOS APÓS DESPESAS ADMINISTRATIVAS) -->
+    <div class="info-card">
+        <h3>📈 Atualização do RBT12 em Janeiro/2027 (R$ 586.391,80)</h3>
+        <ul>
+            <li><strong>Janeiro/2027:</strong> Enquadrado na <strong>3ª Faixa do Anexo I</strong> (Faixa de R$ 360.000,01 a R$ 720.000,00). Alíquota Nominal de <strong>9,50%</strong> e Dedução de <strong>R$ 13.860,00</strong>.</li>
+            <li><strong>Alíquota Efetiva Inicial em Jan/2027:</strong> <span style="font-weight:bold; color:var(--primary);">(R$ 586.391,80 × 9,5% - R$ 13.860,00) ÷ R$ 586.391,80 = 7,1368%</span>.</li>
+            <li><strong>Projeção Dinâmica dos Meses Seguintes (Fev a Dez/2027):</strong> O RBT12 de cada mês é atualizado expurgando o mês correspondente de 2026 e somando o faturamento do novo mês de 2027 (assumindo a média histórica anterior de R$ 48.865,98/mês como substituição de saída).</li>
         </ul>
     </div>
 
@@ -316,7 +321,7 @@
                     <td id="tot-cpj">R$ 180.000,00</td>
                 </tr>
                 <tr>
-                    <td>Folha de Pagamento</td>
+                    <td>Folha Bruta (2 Salários Mínimos)</td>
                     <td><input class="table-input" id="folha-1" value="3036.00" onchange="recalcularTudo()"></td>
                     <td><input class="table-input" id="folha-2" value="3036.00" onchange="recalcularTudo()"></td>
                     <td><input class="table-input" id="folha-3" value="3036.00" onchange="recalcularTudo()"></td>
@@ -415,7 +420,7 @@
     </div>
 
     <div class="footer-note">
-        <p>Desenvolvido para DR3 Reciclagem e Artefatos de Metais Ltda — Estudo de Viabilidade Fiscal 2027 com Crédito de Despesas Administrativas (CGSN 140/2018 e LC 214/2025).</p>
+        <p>Desenvolvido para DR3 Reciclagem e Artefatos de Metais Ltda — Estudo de Viabilidade Fiscal 2027 com RBT12 Inicial de R$ 586.391,80 (CGSN 140/2018 e LC 214/2025).</p>
     </div>
 
 </div>
@@ -542,7 +547,7 @@
             let mDebCbs = mRpa * 0.0970;
             let mCredCbsPf = mCpf * 0.0700;
             let mCredCbsPj = mCpj * 0.0970;
-            let mCredCbsDesp = mDesp * 0.0970; // Crédito de 9,70% sobre Despesas Admin!
+            let mCredCbsDesp = mDesp * 0.0970;
             let mCbsLiq = Math.max(0, mDebCbs - mCredCbsPf - mCredCbsPj - mCredCbsDesp);
 
             debCbs.push(mDebCbs);
@@ -553,7 +558,7 @@
 
             let mDebIbs = mRpa * 0.0010;
             let mCredIbsPj = mCpj * 0.0010;
-            let mCredIbsDesp = mDesp * 0.0010; // Crédito de 0,10% sobre Despesas Admin!
+            let mCredIbsDesp = mDesp * 0.0010;
             let mIbsLiq = Math.max(0, mDebIbs - mCredIbsPj - mCredIbsDesp);
 
             debIbs.push(mDebIbs);
