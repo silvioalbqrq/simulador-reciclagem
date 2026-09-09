@@ -13,6 +13,7 @@
             --card-bg: #FFFFFF;
             --text-dark: #212529;
             --border: #DEE2E6;
+            --danger: #D90429;
         }
 
         body {
@@ -85,6 +86,24 @@
             color: white;
         }
 
+        .btn-zerar {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--danger);
+            background: #FFF0F2;
+            color: var(--danger);
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.82rem;
+            transition: all 0.2s;
+            margin-left: auto;
+        }
+
+        .btn-zerar:hover {
+            background: var(--danger);
+            color: white;
+        }
+
         .info-card {
             background: #EBF8F1;
             border-left: 4px solid var(--accent);
@@ -96,6 +115,42 @@
 
         .info-card h3 {
             margin-top: 0;
+            color: var(--primary);
+        }
+
+        .inputs-flex-box {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .rbt12-input-box {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: #FFFFFF;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            width: fit-content;
+        }
+
+        .rbt12-input-box label {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 0.88rem;
+        }
+
+        .rbt12-input-box input {
+            width: 110px;
+            padding: 0.35rem;
+            border: 1px solid var(--primary-light);
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: right;
             color: var(--primary);
         }
 
@@ -198,7 +253,7 @@
 
 <header>
     <h1>Planejamento Tributário Anual 2027</h1>
-    <p>DR3 RECICLAGEM E ARTEFATOS DE METAIS LTDA — RBT12 Inicial de Jan/2027 = R$ 586.391,80 (ANEXO I - CGSN nº 140/2018)</p>
+    <p>DR3 RECICLAGEM E ARTEFATOS DE METAIS LTDA — Estudo de Viabilidade Fiscal (CGSN nº 140/2018 e LC 214/2025)</p>
 </header>
 
 <div class="container">
@@ -213,22 +268,34 @@
         </ul>
     </div>
 
-    <!-- 2. INFOCARD ATUALIZAÇÃO DO RBT12 -->
+    <!-- 2. INFOCARD ATUALIZAÇÃO DO RBT12 E ALÍQUOTA DA CBS EDITÁVEIS -->
     <div class="info-card">
-        <h3>📈 Atualização do RBT12 em Janeiro/2027 (R$ 586.391,80)</h3>
+        <h3>📈 Configuração do RBT12 e da Alíquota da CBS (Ajustável)</h3>
         <ul>
-            <li><strong>Janeiro/2027:</strong> Enquadrado na <strong>3ª Faixa do Anexo I</strong> (Faixa de R$ 360.000,01 a R$ 720.000,00). Alíquota Nominal de <strong>9,50%</strong> e Dedução de <strong>R$ 13.860,00</strong>.</li>
-            <li><strong>Alíquota Efetiva Inicial em Jan/2027:</strong> <span style="font-weight:bold; color:var(--primary);">(R$ 586.391,80 × 9,5% - R$ 13.860,00) ÷ R$ 586.391,80 = 7,1368%</span>.</li>
-            <li><strong>Projeção Dinâmica dos Meses Seguintes (Fev a Dez/2027):</strong> O RBT12 de cada mês é atualizado expurgando o mês correspondente de 2026 e somando o faturamento do novo mês de 2027 (assumindo a média histórica anterior de R$ 48.865,98/mês como substituição de saída).</li>
+            <li><strong>Alíquota da CBS (Editável):</strong> Por se tratar de uma alíquota de referência sujeita a alterações durante a regulamentação, você pode alterar a porcentagem da CBS abaixo para simular diferentes cenários tributários.</li>
+            <li><strong>RBT12 Inicial de Apuração (Jan/2027):</strong> Permite ajustar a base de faturamento acumulado prévio para calcular com precisão a alíquota efetiva do DAS.</li>
         </ul>
+        <div class="inputs-flex-box">
+            <div class="rbt12-input-box">
+                <label for="input-aliq-cbs">Alíquota da CBS (%):</label>
+                <input type="number" id="input-aliq-cbs" value="9.70" step="0.1" min="0" max="30" onchange="recalcularTudo()">
+                <span style="font-size: 0.8rem; color: #555;">(Padrão: 9,70%)</span>
+            </div>
+            <div class="rbt12-input-box">
+                <label for="input-rbt12-base">RBT12 Inicial (R$):</label>
+                <input type="number" id="input-rbt12-base" value="586391.80" step="1000" onchange="recalcularTudo()">
+                <span style="font-size: 0.8rem; color: #555;">(Padrão: R$ 586.391,80)</span>
+            </div>
+        </div>
     </div>
 
-    <!-- PRESETS DE CENÁRIOS -->
+    <!-- PRESETS DE CENÁRIOS E BOTÃO DE ZERAR -->
     <div class="preset-bar">
-        <label>Carregar Cenários de Virada Rápidos (Jan a Dez):</label>
+        <label>Carregar Cenários Rápidos:</label>
         <button class="btn-preset" onclick="carregarCenario('base')">1. Cenário Base Atual (Simples Puro Vence)</button>
         <button class="btn-preset" onclick="carregarCenario('hibrido')">2. Virada para Simples Híbrido (Mais Compras/Despesas PJ)</button>
         <button class="btn-preset" onclick="carregarCenario('lp')">3. Virada para Lucro Presumido (6ª Faixa + ICMS)</button>
+        <button class="btn-zerar" onclick="zerarTodosValores()">🧹 Zerar Todos os Meses</button>
     </div>
 
     <!-- TABELA 1: ENTRADAS DE JANEIRO A DEZEMBRO -->
@@ -327,7 +394,7 @@
                     <td id="tot-cpj">R$ 180.000,00</td>
                 </tr>
                 <tr>
-                    <td>Folha de Pagamento</td>
+                    <td>Folha Bruta (2 Salários Mínimos)</td>
                     <td><input class="table-input" id="folha-1" value="3036.00" onchange="recalcularTudo()"></td>
                     <td><input class="table-input" id="folha-2" value="3036.00" onchange="recalcularTudo()"></td>
                     <td><input class="table-input" id="folha-3" value="3036.00" onchange="recalcularTudo()"></td>
@@ -435,7 +502,7 @@
     </div>
 
     <div class="footer-note">
-        <p>Desenvolvido para DR3 Reciclagem e Artefatos de Metais Ltda — Estudo de Viabilidade Fiscal 2027 com RBT12 Inicial de R$ 586.391,80 (CGSN 140/2018 e LC 214/2025).</p>
+        <p>Desenvolvido para DR3 Reciclagem e Artefatos de Metais Ltda — Estudo de Viabilidade Fiscal 2027 (CGSN 140/2018 e LC 214/2025).</p>
     </div>
 
 </div>
@@ -443,6 +510,18 @@
 <script>
     function fmt(val) {
         return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    function zerarTodosValores() {
+        const meses = 12;
+        for (let i = 1; i <= meses; i++) {
+            document.getElementById(`rpa-${i}`).value = "0.00";
+            document.getElementById(`cpf-${i}`).value = "0.00";
+            document.getElementById(`cpj-${i}`).value = "0.00";
+            document.getElementById(`folha-${i}`).value = "0.00";
+            document.getElementById(`desp-${i}`).value = "0.00";
+        }
+        recalcularTudo();
     }
 
     function carregarCenario(tipo) {
@@ -487,7 +566,9 @@
         document.getElementById('tot-folha').innerText = fmt(totFolha);
         document.getElementById('tot-desp').innerText = fmt(totDesp);
 
-        let rbt12Base = 586391.80;
+        // Alíquota da CBS e RBT12 Base dos inputs editáveis
+        let pctCbs = (parseFloat(document.getElementById('input-aliq-cbs').value) || 9.70) / 100.0;
+        let rbt12Base = parseFloat(document.getElementById('input-rbt12-base').value) || 0;
         let mediaSaidaMes = rbt12Base / 12;
 
         let rbt12Array = [];
@@ -510,6 +591,7 @@
             else { aliqNom = 0.189; ded = 378000; }
 
             let aliqEfet = currentRbt12 > 0 ? (currentRbt12 * aliqNom - ded) / currentRbt12 : aliqNom;
+            if (aliqEfet < 0) aliqEfet = 0;
             aliqEfetArray.push(aliqEfet);
 
             document.getElementById(`rbt12-${i+1}`).innerText = fmt(currentRbt12);
@@ -555,14 +637,14 @@
             dasPuroTot.push(mTotPuroImp);
             lucroPuro.push(mRpa - mCpf - mCpj - mFolha - mDesp - mTotPuroImp);
 
-            // 2. Simples Híbrido com Crédito de Despesas Admin (9,70% CBS + 0,10% IBS)
+            // 2. Simples Híbrido com Alíquota da CBS Editável (9,70% padrão) e IBS (0,10%)
             let mDasRed = mDasPuro * (1 - 0.1550);
             dasReduzido.push(mDasRed);
 
-            let mDebCbs = mRpa * 0.0970;
-            let mCredCbsPf = mCpf * 0.0700;
-            let mCredCbsPj = mCpj * 0.0970;
-            let mCredCbsDesp = mDesp * 0.0970;
+            let mDebCbs = mRpa * pctCbs;
+            let mCredCbsPf = mCpf * 0.0700; // Crédito Presumido Art. 170 (7,0%)
+            let mCredCbsPj = mCpj * pctCbs;
+            let mCredCbsDesp = mDesp * pctCbs;
             let mCbsLiq = Math.max(0, mDebCbs - mCredCbsPf - mCredCbsPj - mCredCbsDesp);
 
             debCbs.push(mDebCbs);
@@ -602,6 +684,8 @@
             lucroLp.push(mRpa - mCpf - mCpj - mFolha - mDesp - mLpTot);
         }
 
+        let strCbsPct = (pctCbs * 100).toFixed(2) + "%";
+
         function buildRow(label, arrValues, isBold = false, isSub = false, isLucro = false) {
             let sum = arrValues.reduce((a, b) => a + b, 0);
             let style = "";
@@ -633,13 +717,13 @@
         document.getElementById('body-puro').innerHTML = htmlPuro;
         document.getElementById('tot-puro-anual').innerText = fmt(dasPuroTot.reduce((a,b)=>a+b,0));
 
-        // Render Simples Híbrido
+        // Render Simples Híbrido com Alíquota Dinâmica da CBS
         let htmlHibrido = "";
         htmlHibrido += buildRow("DAS Reduzido (Inclui CPP Patronal no DAS)", dasReduzido, false, true);
-        htmlHibrido += buildRow("(+) CBS Débito Próprio (9,70%)", debCbs, false, true);
+        htmlHibrido += buildRow(`(+) CBS Débito Próprio (${strCbsPct})`, debCbs, false, true);
         htmlHibrido += buildRow("(-) CBS Crédito Presumido PF (7,0%)", credCbsPf.map(v => -v), false, true);
-        htmlHibrido += buildRow("(-) CBS Crédito Integral Compras PJ (9,70%)", credCbsPj.map(v => -v), false, true);
-        htmlHibrido += buildRow("(-) CBS Crédito Despesas Admin PJ (9,70%)", credCbsDesp.map(v => -v), false, true);
+        htmlHibrido += buildRow(`(-) CBS Crédito Integral Compras PJ (${strCbsPct})`, credCbsPj.map(v => -v), false, true);
+        htmlHibrido += buildRow(`(-) CBS Crédito Despesas Admin PJ (${strCbsPct})`, credCbsDesp.map(v => -v), false, true);
         htmlHibrido += buildRow("(=) CBS Líquida a Pagar", cbsLiq, true, true);
         htmlHibrido += buildRow("(+) IBS Débito Próprio (0,10%)", debIbs, false, true);
         htmlHibrido += buildRow("(-) IBS Crédito Integral Compras PJ (0,10%)", credIbsPj.map(v => -v), false, true);
@@ -655,7 +739,7 @@
         let htmlLp = "";
         htmlLp += buildRow("IRPJ (15% s/ 8% presunção)", irpjLp, false, true);
         htmlLp += buildRow("CSLL (9% s/ 12% presunção)", csllLp, false, true);
-        htmlLp += buildRow("CBS Líquida (9,7% com créditos Compras/Despesas)", cbsLiq, false, true);
+        htmlLp += buildRow(`CBS Líquida (${strCbsPct} com créditos Compras/Despesas)`, cbsLiq, false, true);
         htmlLp += buildRow("IBS Líquido (0,1% com créditos Compras/Despesas)", ibsLiq, false, true);
         htmlLp += buildRow("ICMS Próprio Estimado", icmsLp, false, true);
         htmlLp += buildRow("CPP Patronal POR FORA (20,0% s/ Folha)", cppLp, true, true);
